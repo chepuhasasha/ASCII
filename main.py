@@ -15,18 +15,18 @@ def brightness(x, y):
 
 def symbol(brightness):
     return {
+        # brightness < 50: ' ',
+        # 50 <= brightness < 100: '7',
+        # 100 <= brightness < 150: '2',
+        # 150 <= brightness < 200: '1',
+        # 200 <= brightness < 255: '5',
+        # 255 <= brightness: '8'
         brightness < 50: ' ',
-        50 <= brightness < 100: '7',
-        100 <= brightness < 150: '2',
-        150 <= brightness < 200: '1',
-        200 <= brightness < 255: '5',
-        255 <= brightness: '8'
-        # brightness < 50: '  ',
-        # 50 <= brightness < 100: '░░',
-        # 100 <= brightness < 150: '▒▒',
-        # 150 <= brightness < 200: '▓▓',
-        # 200 <= brightness < 255: '▓▓',
-        # 255 <= brightness: '██'
+        50 <= brightness < 100: '░',
+        100 <= brightness < 150: '▒',
+        150 <= brightness < 200: '▓',
+        200 <= brightness < 255: '▓',
+        255 <= brightness: '█'
     }[True]
 
 
