@@ -42,3 +42,19 @@
                                           ░░▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒░░░░
 
 ```
+
+## Usage
+
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Generate ASCII art from `1.png`:
+   ```bash
+   python main.py 1.png -o data.txt
+   ```
+   The result will be printed to the console and saved to `data.txt` if the `-o` option is used.
+3. Display the saved ASCII art:
+   ```bash
+   python open.py
+   ```

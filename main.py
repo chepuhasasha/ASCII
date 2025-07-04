@@ -1,51 +1,30 @@
-from PIL import Image
-imag = Image.open("1.png")
-imag = imag.convert('RGB')
+"""Command line interface for generating ASCII art from images."""
 
-width = 100
-height = 40
-resized_img = imag.resize((width, height), Image.ANTIALIAS)
+import argparse
+from pathlib import Path
 
-
-def brightness(x, y):
-    pixelRGB = resized_img.getpixel((x, y))
-    R, G, B = pixelRGB
-    return round(sum([R, G, B])/3)
+from ascii_art import image_to_ascii
 
 
-def symbol(brightness):
-    return {
-        # brightness < 50: ' ',
-        # 50 <= brightness < 100: '7',
-        # 100 <= brightness < 150: '2',
-        # 150 <= brightness < 200: '1',
-        # 200 <= brightness < 255: '5',
-        # 255 <= brightness: '8'
-        brightness < 50: ' ',
-        50 <= brightness < 100: '░',
-        100 <= brightness < 150: '▒',
-        150 <= brightness < 200: '▓',
-        200 <= brightness < 255: '▓',
-        255 <= brightness: '█'
-    }[True]
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate ASCII art from an image")
+    parser.add_argument("image", nargs="?", default="1.png", help="Path to the input image")
+    parser.add_argument("--width", type=int, default=100, help="Output width in characters")
+    parser.add_argument("--height", type=int, default=40, help="Output height in characters")
+    parser.add_argument("-o", "--output", help="Optional path to save the ASCII art")
+    return parser.parse_args()
 
 
-h = 1
-result = []
-while h < height:
-    w = 1
-    line = ''
-    while w < width:
-        s = symbol(brightness(w, h))
-        line += s
-        w += 1
-    result.append(line)
-    h += 1
+def main() -> None:
+    args = parse_args()
+    ascii_art = image_to_ascii(args.image, args.width, args.height)
 
-with open('data.txt', "wb") as file:
-    for line in result:
-        file.write(str(line + '\n').encode("UTF-8"))
+    if args.output:
+        path = Path(args.output)
+        path.write_text(ascii_art, encoding="utf-8")
+
+    print(ascii_art)
 
 
-for line in result:
-    print(line)
+if __name__ == "__main__":
+    main()
